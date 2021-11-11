@@ -1,24 +1,27 @@
 <template>
   <div id="app">
     <div id="nav">
-      <Nav/>
+      <Header/>
     </div>
     <router-view/>
   </div>
 </template>
 
 <script>
-import Nav from './components/partials/Nav.vue';
+import Header from './components/partials/Header.vue';
 
 export default {
   name: 'app',
   components: {
-    Nav,
+    Header,
   }
 }
 </script>
 <style>
 #app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

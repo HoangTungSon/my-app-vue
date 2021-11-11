@@ -1,36 +1,81 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    user: {{user}}
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div id="loginForm">
+    <div id="form">
+      <div id="title">
+        <label>Sign In</label>
+      </div>
+      <div id="formDetail">
+        <div>
+          <label>Email:</label>
+          <input type="email" v-model="formData.email" />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input type="password" v-model="formData.password" />
+        </div>
+      </div>
+      <button type="submit" v-on:click="signIn">Sign In</button>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
 import requestApi from "../service/api";
+import router from "../router/index";
 
 export default {
   name: "Home",
-  components: {
-    HelloWorld,
-  },
   data() {
     return {
       user: null,
+      formData: {
+        email: "",
+        password: "",
+      },
     };
   },
   methods: {
-    
-  },
-  mounted() {
-    requestApi.getUrl("http://localhost:3001/signIn", {
-      email: "test@gmail.com",
-      password: "123456",
-    })
-      .then(result => this.user = result)
-      .catch(err => console.log(err));
+    signIn: function () {
+      requestApi
+        .getUrl("http://localhost:3001/signIn", {
+          email: this.formData.email,
+          password: this.formData.password,
+        })
+        .then((result) => {
+          this.user = result;
+          localStorage.setItem('user', JSON.stringify(this.user));
+          router.push({name: 'Home'})
+        })
+        .catch((err) => console.log(err));
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#form {
+  margin: auto;
+  height: 300px;
+  width: 300px;
+  background-color: cornflowerblue;
+  color: white;
+}
+
+#title {
+  text-align: center;
+  font-size: 20px;
+}
+
+#formDetail {
+  div {
+    display: grid;
+  }
+}
+</style>

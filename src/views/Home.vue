@@ -7,11 +7,7 @@
           <h2 class="subtitle">
             Make sure you check out our upcoming events below
           </h2>
-          <div class="button-block">
-            <button class="button is-xl is-dark">
-              <router-link to="/signIn">Sign In</router-link>
-            </button>
-          </div>
+          <div class="button-block">User: {{ user }}</div>
         </div>
       </div>
     </section>
@@ -23,6 +19,11 @@ import EventList from "../components/EventList.vue";
 
 export default {
   name: "home",
+  data() {
+    return {
+      user: JSON.parse(localStorage.getItem("user")),
+    };
+  },
   components: {
     EventList,
   },
